@@ -112,27 +112,3 @@ export const cbi = {
   email: 'agent@migrationinvestments.com',
   body: 'As Authorised Agents of the Saint Lucia Citizenship by Investment Programme, GMIS supports prospective candidates for citizenship, assists with the process and submits their applications.',
 } as const;
-
-export type Tip = { title: string; date: string; excerpt: string; slug: string };
-
-// Latest "Tip of the Week" posts from the D&A blog.
-export const tips: Tip[] = [
-  {
-    title: 'Who can get called to the Bar of Saint Lucia',
-    date: '2026-08-31',
-    slug: 'who-can-get-called-to-the-bar-of-saint-lucia',
-    excerpt: 'To be called to the Bar of Saint Lucia, you need to meet eligibility and procedural requirements that depend on your citizenship and qualifications.',
-  },
-  {
-    title: 'Understanding the importance of birth certificates in Saint Lucia',
-    date: '2025-05-04',
-    slug: 'understanding-the-importance-of-birth-certificates-in-saint-lucia',
-    excerpt: 'A birth certificate is a legal document that proves your date, place of birth and parentage. A baptism certificate records a religious ceremony.',
-  },
-  {
-    title: 'Navigating property division during divorce in Saint Lucia',
-    date: '2025-04-27',
-    slug: 'navigating-property-division-during-divorce-in-saint-lucia',
-    excerpt: 'During a divorce or annulment, the Court has the authority to decide how property is divided, including community and separate property.',
-  },
-];

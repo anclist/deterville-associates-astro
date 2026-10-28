@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import PageHero from '@organisms/PageHero.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { sister } from '@data/site';
+
+// The firm's own words from its About and home pages.
+const approach = [
+  {
+    title: 'Our approach',
+    body: 'At Deterville & Associates, we specialise in bringing the law to your corner. We are dedicated to understanding what results you want and to helping you understand what actions we can take on your behalf. We will work with you every step of the way to make sure that you understand the choices you are making and feel empowered to make them.',
+  },
+  {
+    title: 'Law you can understand',
+    body: 'We understand that legal action can sometimes be overwhelming. We are dedicated to providing you with Saint Lucia law help in language that you can understand. If you don’t feel like you understand your options, just ask, and our lawyers and staff will work to find an explanation that works for you.',
+  },
+  {
+    title: 'A team in your corner',
+    body: 'Every morning, our legal team has a meeting to discuss our cases. This means that no matter who you go with in our firm, the expertise of the whole team weighs in on your case.',
+  },
+  {
+    title: 'A focus on results',
+    body: 'The first step is for us to work with you and come up with a plan to get the results you need. Through our understanding of Saint Lucia law and your description of your circumstances, our lawyers will craft a path to success.',
+  },
+];
+---
+<BaseLayout title="About D&A" description="Deterville & Associates is a law firm in Castries, Saint Lucia, built on a legacy of legal practice and a team that works every case together.">
+  <PageHero title="About D&A" lede="D&A was built on legacy. It is in our DNA. Deterville & Associates has a long legacy of legal success, and we use that experience to help you down a path to the results you need." />
+
+  <section class="approach" aria-label="How we work">
+    <Container>
+      <div class="grid">
+        {approach.map((a) => (
+          <div>
+            <h2>{a.title}</h2>
+            <p>{a.body}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="team" aria-labelledby="team-title">
+    <Container class="team__grid">
+      <img src="/images/team.jpg" alt="The Deterville Attorneys-at-Law of Saint Lucia" width="1600" height="1600" loading="lazy" />
+      <div>
+        <SectionHeading id="team-title" title="The Deterville Attorneys-at-Law" />
+        <p>Our lawyers carry on a legacy of legal practice in Saint Lucia, and meet every morning so each case has the whole team behind it.</p>
+        <p><a href="/our-team">Meet our team</a></p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="sister" aria-labelledby="sister-title">
+    <Container class="sister__grid">
+      <SectionHeading id="sister-title" title="Our sister firm in Canada" />
+      <div>
+        <p>
+          <a href={sister.href} target="_blank" rel="noopener">{sister.name}</a> in Toronto handles {sister.summary}.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .approach { padding-block: var(--space-9); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-9); }
+  .grid > div { border-top: 2px solid var(--color-accent); padding-top: var(--space-5); }
+  h2 { font-size: var(--size-2); margin-bottom: var(--space-3); }
+  .grid p { max-width: 56ch; }
+
+  .team { padding-block: var(--space-9); background: var(--color-surface-tint); }
+  .team :global(.team__grid) { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: center; }
+  .team img { width: 100%; height: auto; border-radius: var(--radius-sm); }
+  .team p { max-width: 52ch; }
+  .team p + p { margin-top: var(--space-4); }
+
+  .sister { padding-block: var(--space-9); }
+  .sister :global(.sister__grid) { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); }
+  .sister p { max-width: 56ch; font-size: var(--size-1); line-height: var(--leading-snug); }
+
+  @media (max-width: 52rem) {
+    .grid, .team :global(.team__grid), .sister :global(.sister__grid) { grid-template-columns: 1fr; gap: var(--space-6); }
+    .team img { max-width: 24rem; }
+  }
+</style>

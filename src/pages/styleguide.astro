@@ -1,0 +1,412 @@
+---
+/**
+ * Styleguide — living documentation of the design system.
+ * Tokens are read from the same objects that generate the CSS, and every specimen below is
+ * the real component, so this page can't drift from what ships.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import Icon from '@atoms/Icon.astro';
+import Logo from '@atoms/Logo.astro';
+import Tag from '@atoms/Tag.astro';
+import Input from '@atoms/Input.astro';
+import Label from '@atoms/Label.astro';
+import Checkbox from '@atoms/Checkbox.astro';
+import FormField from '@molecules/FormField.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import PostCard from '@molecules/PostCard.astro';
+import ContactMethod from '@molecules/ContactMethod.astro';
+import Step from '@molecules/Step.astro';
+import FaqItem from '@molecules/FaqItem.astro';
+import PageHero from '@organisms/PageHero.astro';
+import Flag from '@atoms/Flag.astro';
+import PracticeGroups from '@organisms/PracticeGroups.astro';
+import CitizenshipBand from '@organisms/CitizenshipBand.astro';
+import ApproachRow from '@organisms/ApproachRow.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { primitive, semantic } from '@tokens/tokens';
+import { icons, type IconName } from '@lib/icons';
+import { contrast, grade } from '@lib/contrast';
+import { firm, sister } from '@data/site';
+
+const P = primitive.color;
+const families = [
+  { name: 'Navy', note: 'Brand, from the logo’s #1A1746. 700 is the action colour; 50 tints quiet sections; 900 is the footer.', keys: ['navy-50', 'navy-100', 'navy-200', 'navy-400', 'navy-600', 'navy-700', 'navy-800', 'navy-900'] },
+  { name: 'Flag blue', note: 'From the logo’s scales and swords. Decorative only: rules, markers, the focus ring. Never text.', keys: ['flag-500', 'flag-600'] },
+  { name: 'National flag', note: 'The flag of Saint Lucia’s own colours, used only by the Flag atom.', keys: ['flag-sky', 'flag-gold', 'flag-black'] },
+  { name: 'Ink', note: 'Text and borders, cooled a touch toward the navy.', keys: ['ink-900', 'ink-700', 'ink-500', 'ink-300', 'ink-100', 'paper'] },
+  { name: 'Feedback', note: 'Form confirmations and errors only.', keys: ['green-700', 'green-50', 'red-700', 'red-50'] },
+] as const;
+
+const pairs: { fg: keyof typeof P; bg: keyof typeof P; use: string }[] = [
+  { fg: 'ink-900', bg: 'paper', use: 'Body text' },
+  { fg: 'ink-500', bg: 'paper', use: 'Muted text' },
+  { fg: 'navy-700', bg: 'paper', use: 'Links, primary action' },
+  { fg: 'navy-800', bg: 'navy-50', use: 'Headings on tint' },
+  { fg: 'paper', bg: 'navy-700', use: 'Button label' },
+  { fg: 'paper', bg: 'navy-900', use: 'Footer links' },
+  { fg: 'navy-200', bg: 'navy-900', use: 'Footer text' },
+  { fg: 'flag-600', bg: 'paper', use: 'Accent rules (non-text)' },
+];
+
+const typeScale = [
+  { step: '4', role: 'Page titles and the home hero name', sample: 'Deterville & Associates' },
+  { step: '3', role: 'Section titles, closing call to action', sample: 'How we can help' },
+  { step: '2', role: 'Service and card titles, footer firm name', sample: 'Property & land' },
+  { step: '1', role: 'Ledes, review quotes, FAQ questions', sample: 'Legal expertise on which you can rely' },
+  { step: '0', role: 'Body', sample: 'We work with families, property owners and businesses across Saint Lucia.' },
+  { step: '-1', role: 'Meta, labels, lists, footer', sample: 'Open 8:00 a.m. to 4:00 p.m.' },
+  { step: '-2', role: 'Fine print', sample: 'Mailing address: General P.O. Box 835, Castries, LC04 101, Saint Lucia' },
+];
+
+const nav = [
+  ['principles', 'Principles'],
+  ['color', 'Colour'],
+  ['type', 'Typography'],
+  ['space', 'Space and shape'],
+  ['sister', 'Sister system'],
+  ['atoms', 'Atoms'],
+  ['molecules', 'Molecules'],
+  ['organisms', 'Organisms'],
+];
+const samplePost = { title: 'Understanding the importance of birth certificates in Saint Lucia', description: 'In Saint Lucia, only the birth certificate is evidence of citizenship by birth.', date: new Date('2025-05-04'), category: 'Tip of the Week', image: '/images/post-birth-certificate.jpg' };
+const organisms = [
+  ['SiteHeader', 'Sticky white bar: logo, navigation, phone and the booking button. Collapses to a menu below 64rem.'],
+  ['HomeHero', 'Firm name, tagline, one primary action and the office details beside a visual: the gavel-and-flag photo, the principles panel or the flag.'],
+  ['ApproachRow', 'How the firm works, in four short columns under an image hero.'],
+  ['PageHero', 'Inner-page title and lede on white, with an optional actions slot.'],
+  ['PracticeGroups', 'Every practice area in four groups. Sibling of the Law Office’s ServiceColumns.'],
+  ['CitizenshipBand', 'Citizenship by Investment through GMIS, on the tint. Takes the slot of the Law Office’s RouteTimeline.'],
+  ['TipRow', 'The latest Tip of the Week posts. Sibling of QuoteRow.'],
+  ['VisitUs', 'Office, hours and contact details in two columns. Sibling of BookingFaq.'],
+  ['PostGrid', 'Blog posts in a grid of PostCards.'],
+  ['ContactForm', 'General enquiries; posts to a form endpoint or falls back to email.'],
+  ['Prose', 'Long-form typography for blog posts.'],
+  ['CtaBand', 'The closing ask on the tint. Every page ends here.'],
+  ['SiteFooter', 'The only dark surface: sister-firm link, firm, practice groups, pages, contact, socials.'],
+];
+---
+<BaseLayout title="Styleguide" description="The Deterville & Associates design system: tokens, atoms, molecules and organisms.">
+  <PageHero title="Design system" lede="Tokens, components and the rules behind them. Every specimen here is the production component, styled by the same token file as the site." />
+
+  <Container class="sg">
+    <nav class="sg-nav" aria-label="Styleguide sections">
+      <ul>{nav.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul>
+    </nav>
+
+    <div class="sg-body">
+      <section id="principles" class="sg-section">
+        <h2>Principles</h2>
+        <ol class="principles">
+          <li><strong>Quiet by default.</strong> White pages, one accent colour, no decoration that doesn’t carry information. The footer is the only dark surface.</li>
+          <li><strong>Lead with Saint Lucia.</strong> The flag and the firm’s own photographs carry the identity; the logo’s navy carries the brand.</li>
+          <li><strong>One ask per screen.</strong> Booking a consultation is the primary action everywhere. Phone and email are always second, as plain links.</li>
+          <li><strong>Plain words, real facts.</strong> Every claim is sourced from the firm. No invented statistics, no all-caps labels.</li>
+          <li><strong>Structure as text.</strong> Lists, rules and a light tint instead of cards, icons and shadows. Numbers only where there’s a real sequence.</li>
+        </ol>
+      </section>
+
+      <section id="color" class="sg-section">
+        <h2>Colour</h2>
+        <p class="sg-lede">Primitives hold raw values. Components never use them directly; they use semantic tokens such as <code>--color-action</code>.</p>
+        {families.map((f) => (
+          <div class="family">
+            <h3>{f.name}</h3>
+            <p class="note">{f.note}</p>
+            <ul class="swatches">
+              {f.keys.map((k) => (
+                <li class="swatch">
+                  <span class="chip" style={`background:${P[k]}`} />
+                  <code>--{k}</code>
+                  <span class="hex">{P[k]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <h3>Semantic tokens</h3>
+        <div class="table-wrap">
+          <table class="tokens">
+            <thead><tr><th scope="col">Token</th><th scope="col">Resolves to</th><th scope="col">Sample</th></tr></thead>
+            <tbody>
+              {Object.entries(semantic.color).map(([k, v]) => (
+                <tr>
+                  <td><code>--color-{k}</code></td>
+                  <td><code>{v.replace(/var\(--(.+)\)/, '$1')}</code></td>
+                  <td><span class="chip chip--sm" style={`background:var(--color-${k})`} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Contrast pairs</h3>
+        <p class="note">WCAG 2 ratios, calculated at build time from the token values.</p>
+        <ul class="pairs">
+          {pairs.map((p) => {
+            const r = contrast(P[p.fg], P[p.bg]);
+            return (
+              <li class="pair" style={`background:${P[p.bg]};color:${P[p.fg]}`}>
+                <span class="pair__sample">Aa</span>
+                <span class="pair__use">{p.use}</span>
+                <span class="pair__ratio">{r}:1, {grade(r)}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section id="type" class="sg-section">
+        <h2>Typography</h2>
+        <p class="sg-lede">
+          Playfair Display carries over from the existing brand for headings, set at medium weight so it reads as considered rather
+          than loud. Public Sans is the body face: plain and legible at small sizes. Scale: major third (1.25) from a 17px base; the
+          top step is fluid.
+        </p>
+        <div class="faces">
+          <div class="face">
+            <span class="face__sample" style="font-family:var(--font-heading)">Aa</span>
+            <div><strong>Playfair Display</strong><p class="note">Headings and quotes. 500.</p></div>
+          </div>
+          <div class="face">
+            <span class="face__sample" style="font-family:var(--font-body)">Aa</span>
+            <div><strong>Public Sans</strong><p class="note">Body, UI, forms. 400–600.</p></div>
+          </div>
+        </div>
+        <ul class="scale">
+          {typeScale.map((t) => {
+            const display = Number(t.step) >= 1;
+            return (
+              <li>
+                <div class="scale__meta"><code>--size-{t.step}</code><span>{primitive.size[t.step as keyof typeof primitive.size]}</span><span>{t.role}</span></div>
+                <p style={`font-size:var(--size-${t.step});font-family:var(--font-${display ? 'heading' : 'body'});color:var(--color-${display ? 'heading' : 'text'});line-height:1.15;font-weight:${display ? 500 : 400}`}>{t.sample}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section id="space" class="sg-section">
+        <h2>Space and shape</h2>
+        <p class="sg-lede">A 4px base grid. Sections are separated by <code>--space-9</code> of white space, a hairline rule or the tint, never by shadows.</p>
+        <ul class="spaces">
+          {Object.entries(primitive.space).map(([k, v]) => (
+            <li><code>--space-{k}</code><span class="bar" style={`width:${v}`} /><span class="note">{v}</span></li>
+          ))}
+        </ul>
+        <div class="radii">
+          <div class="radius"><span style="border-radius:var(--radius-sm)" /><code>--radius-sm</code><span class="note">The only radius: buttons, inputs, tags, photographs, tinted panels.</span></div>
+          <div class="radius"><span style="border-radius:var(--radius-sm);box-shadow:var(--shadow-raised);background:var(--color-surface)" /><code>--shadow-raised</code><span class="note">The open mobile menu only.</span></div>
+        </div>
+      </section>
+
+      <section id="sister" class="sg-section">
+        <h2>Sister system</h2>
+        <p class="sg-lede">
+          This system is a sibling of the <a href={sister.href}>{sister.name}</a> design system. Both sites share the same
+          components, type scale, spacing, single radius and page rhythm, so the two firms read as one family. Only the
+          palette changes: navy and Saint Lucia flag blue here, oxblood there. Organisms specific to each firm sit in the
+          same slots on the page.
+        </p>
+      </section>
+
+      <section id="atoms" class="sg-section">
+        <h2>Atoms</h2>
+        <p class="sg-lede">The smallest pieces. They take props, not context, and know nothing about the page they sit on.</p>
+
+        <div class="specimen">
+          <h3>Button</h3>
+          <p class="note">Primary is the single action we want on a screen. Secondary is an alternative; ghost is low emphasis.</p>
+          <div class="row">
+            <Button>Book a consultation</Button>
+            <Button variant="secondary">Read all reviews on Google</Button>
+            <Button variant="ghost">Cancel</Button>
+          </div>
+          <div class="row">
+            <Button size="sm">Small</Button>
+            <Button>Medium</Button>
+            <Button size="lg">Large</Button>
+            <Button icon="phone" variant="secondary">{firm.phone}</Button>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Form controls</h3>
+          <div class="grid-2">
+            <div class="stack"><Label for="sg-a" required>Text input</Label><Input id="sg-a" placeholder="Jane Doe" /></div>
+            <div class="stack"><Label for="sg-b">Select</Label><Input id="sg-b" as="select" options={['Family & estates', 'Property & land']} /></div>
+            <div class="stack"><Label for="sg-c">Invalid</Label><Input id="sg-c" invalid /></div>
+            <div class="stack"><Label for="sg-d">Textarea</Label><Input id="sg-d" as="textarea" rows={3} /></div>
+          </div>
+          <Checkbox id="sg-e">Send me occasional updates.</Checkbox>
+        </div>
+
+        <div class="grid-2">
+          <div class="specimen">
+            <h3>Tag</h3>
+            <p class="note">Blog categories. One tone.</p>
+            <div class="row"><Tag>Tip of the Week</Tag></div>
+          </div>
+          <div class="specimen">
+            <h3>Logo</h3>
+            <p class="note">The original mark, on light grounds only.</p>
+            <div class="row"><Logo height={72} /><Logo height={52} /></div>
+          </div>
+          <div class="specimen">
+            <h3>Flag</h3>
+            <p class="note">The flag of Saint Lucia, drawn from its geometry. Full 2:1, or a 3:4 portrait crop for the hero.</p>
+            <div class="row flags"><Flag /><Flag crop="portrait" /></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Icon</h3>
+          <p class="note">Used sparingly, only where an icon is faster to read than a word. 24px grid, inherits <code>currentColor</code>.</p>
+          <ul class="icons">
+            {(Object.keys(icons) as IconName[]).map((n) => <li><Icon name={n} size={24} /><code>{n}</code></li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section id="molecules" class="sg-section">
+        <h2>Molecules</h2>
+        <p class="sg-lede">Atoms combined to do one job: a labelled field, a review, a step in a process.</p>
+
+        <div class="specimen">
+          <h3>FormField</h3>
+          <div class="grid-2">
+            <FormField id="sg-f1" label="Phone or WhatsApp" type="tel" hint="Include your country code." />
+            <FormField id="sg-f2" label="Email" type="email" required error="Enter an email address like name@example.com." />
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>SectionHeading</h3>
+          <SectionHeading title="How we can help" lede="A section title with an optional lede. No eyebrow labels above it." />
+        </div>
+
+        <div class="specimen"><h3>PostCard</h3><div class="narrow"><PostCard href="#" {...samplePost} /></div></div>
+
+        <div class="grid-2">
+          <div class="specimen">
+            <h3>ContactMethod</h3>
+            <div class="stack">
+              <ContactMethod label="Phone" href={firm.phoneHref}>{firm.phone}</ContactMethod>
+              <ContactMethod label="Email" href={`mailto:${firm.email}`}>{firm.email}</ContactMethod>
+            </div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Step</h3>
+          <p class="note">Numbered only when the content really is a sequence.</p>
+          <ol class="steps-demo"><Step title="Send a message">Tell us briefly what’s happening.</Step><Step title="Meet a lawyer">We explain your options in plain language.</Step></ol>
+        </div>
+
+        <div class="specimen">
+          <h3>FaqItem</h3>
+          <div>
+            <FaqItem question="I live outside Canada. Can we still meet?" open>Yes. Most consultations happen online.</FaqItem>
+            <FaqItem question="Is the consultation free?">No. Consultations are paid.</FaqItem>
+          </div>
+        </div>
+      </section>
+
+      <section id="organisms" class="sg-section">
+        <h2>Organisms</h2>
+        <p class="sg-lede">Complete sections assembled into pages. A few are shown live below.</p>
+        <dl class="organism-list">
+          {organisms.map(([name, body]) => (
+            <div><dt><code>{name}</code></dt><dd>{body}</dd></div>
+          ))}
+        </dl>
+      </section>
+    </div>
+  </Container>
+
+  <ApproachRow />
+  <PracticeGroups />
+  <CitizenshipBand />
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em; background: var(--color-surface-tint); padding: 0.1em 0.35em; border-radius: var(--radius-sm); color: var(--navy-700); }
+
+  :global(.sg) { display: grid; gap: var(--space-7); padding-block: var(--space-8) var(--space-9); }
+  @media (min-width: 64rem) { :global(.sg) { grid-template-columns: 13rem minmax(0, 1fr); gap: var(--space-9); } }
+  .sg-nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+  @media (min-width: 64rem) {
+    .sg-nav { position: sticky; top: 7rem; align-self: start; }
+    .sg-nav ul { flex-direction: column; border-left: 1px solid var(--color-border); gap: 0; }
+    .sg-nav a { padding: var(--space-2) var(--space-4); }
+  }
+  .sg-nav a { display: block; color: var(--color-text-muted); text-decoration: none; }
+  .sg-nav a:hover { color: var(--color-action); }
+
+  .sg-body { display: grid; gap: var(--space-9); min-width: 0; }
+  .sg-section > h2 { font-size: var(--size-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); margin-bottom: var(--space-5); }
+  .sg-section h3 { font-size: var(--size-1); margin-bottom: var(--space-2); }
+  .sg-section > h3 { margin-top: var(--space-7); }
+  .sg-lede { color: var(--color-text-muted); max-width: 64ch; margin-bottom: var(--space-6); }
+  .note { font-size: var(--size--1); color: var(--color-text-muted); }
+
+  .principles { padding-left: 1.3em; display: grid; gap: var(--space-4); max-width: 68ch; }
+  .principles li::marker { color: var(--color-action); font-weight: 600; }
+
+  .family { margin-bottom: var(--space-6); }
+  .swatches { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); }
+  .swatch { display: grid; gap: 2px; font-size: var(--size--1); }
+  .swatch code { background: none; padding: 0; color: var(--color-text); }
+  .chip { display: block; height: 4.5rem; border-radius: var(--radius-sm); border: 1px solid rgb(0 0 0 / 0.06); margin-bottom: var(--space-2); }
+  .chip--sm { width: 2.25rem; height: 1.5rem; margin: 0; }
+  .hex { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+
+  .table-wrap { overflow-x: auto; margin-top: var(--space-3); }
+  .tokens { width: 100%; border-collapse: collapse; font-size: var(--size--1); }
+  .tokens th { text-align: left; font-weight: 600; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--ink-300); }
+  .tokens td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+
+  .pairs { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
+  .pair { display: grid; gap: var(--space-1); padding: var(--space-4); border-radius: var(--radius-sm); border: 1px solid rgb(0 0 0 / 0.06); }
+  .pair__sample { font-family: var(--font-heading); font-size: var(--size-3); line-height: 1; }
+  .pair__use { font-weight: 600; }
+  .pair__ratio { font-size: var(--size--1); opacity: 0.9; font-variant-numeric: tabular-nums; }
+
+  .faces { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-bottom: var(--space-6); }
+  .face { display: flex; gap: var(--space-5); align-items: center; padding: var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+  .face__sample { font-size: 3.5rem; line-height: 1; color: var(--color-heading); }
+  .scale { list-style: none; padding: 0; }
+  .scale li { display: grid; gap: var(--space-2); padding-block: var(--space-4); border-top: 1px solid var(--color-border); }
+  .scale__meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--size--1); color: var(--color-text-muted); }
+  .scale p { overflow-wrap: anywhere; }
+
+  .spaces { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .spaces li { display: grid; grid-template-columns: 7rem auto 1fr; align-items: center; gap: var(--space-4); }
+  .bar { display: block; height: 0.75rem; background: var(--navy-200); border-radius: 2px; }
+  .radii { display: flex; flex-wrap: wrap; gap: var(--space-7); margin-top: var(--space-7); }
+  .radius { display: grid; gap: var(--space-1); justify-items: start; font-size: var(--size--1); max-width: 16rem; }
+  .radius > span:first-child { width: 6rem; height: 4rem; background: var(--color-surface-tint); border: 1px solid var(--navy-200); margin-bottom: var(--space-2); }
+
+  .specimen { padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-sm); margin-bottom: var(--space-5); display: grid; gap: var(--space-4); min-width: 0; }
+  .specimen > h3 { margin: 0; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .grid-2 { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .grid-2 > .specimen { margin-bottom: 0; }
+  .grid-2 + .specimen, .specimen + .grid-2 { margin-top: var(--space-5); }
+  .stack { display: grid; gap: var(--space-3); }
+  .icons { list-style: none; padding: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); }
+  .icons li { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-4) var(--space-2); border-radius: var(--radius-sm); background: var(--color-surface-tint); color: var(--color-action); }
+  .icons code { background: none; color: var(--color-text-muted); }
+  .steps-demo { padding-left: 1.25rem; display: grid; gap: var(--space-4); }
+  .plain { list-style: none; padding: 0; }
+  .flags :global(.flag) { width: 12rem; }
+  .flags :global(.flag--portrait) { width: 6rem; }
+  .narrow { max-width: 22rem; }
+  .organism-list { display: grid; }
+  .organism-list > div { display: grid; gap: var(--space-1); padding-block: var(--space-3); border-bottom: 1px solid var(--color-border); }
+  @media (min-width: 40rem) { .organism-list > div { grid-template-columns: 11rem minmax(0, 1fr); gap: var(--space-4); } }
+  .organism-list dd { color: var(--color-text-muted); }
+</style>

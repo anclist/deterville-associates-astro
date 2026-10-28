@@ -11,4 +11,12 @@ export default defineConfig({
   base,
   trailingSlash: 'ignore',
   integrations: [basePath()],
+  redirects: {
+    // Legacy GoDaddy URLs
+    '/contact-d&a': '/contact',
+    '/about-d&a': '/about',
+    '/d&a-blog': '/blog',
+    '/migration-services': '/citizenship-by-investment',
+    '/f/[slug]': '/blog/[slug]',
+  },
 });

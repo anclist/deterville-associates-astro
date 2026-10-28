@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import PageHero from '@organisms/PageHero.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { firm } from '@data/site';
+---
+<BaseLayout title="Our Team" description="The Deterville Attorneys-at-Law of Saint Lucia: a legal team that meets every morning so the whole team’s expertise weighs in on your case.">
+  <PageHero
+    title="Our team"
+    lede="Every morning, our legal team meets to discuss our cases. No matter who you work with in our firm, the expertise of the whole team weighs in on yours."
+  />
+
+  <section class="team">
+    <Container class="team__grid">
+      <figure>
+        <img src="/images/team.jpg" alt="The Deterville Attorneys-at-Law of Saint Lucia" width="1600" height="1600" />
+        <figcaption>The Deterville Attorneys-at-Law of Saint Lucia</figcaption>
+      </figure>
+      <div class="text">
+        <h2>A team in your corner</h2>
+        <p>
+          At Deterville &amp; Associates, we specialise in bringing the law to your corner. We are dedicated to understanding
+          what results you want and to helping you understand what actions we can take on your behalf.
+        </p>
+        <p>
+          We will work with you every step of the way to make sure that you understand the choices you are making and feel
+          empowered to make them.
+        </p>
+        <p class="contact">To speak with one of our lawyers, call <a href={firm.phoneHref}>{firm.phone}</a> or <a href={firm.bookHref}>book a consultation</a>.</p>
+      </div>
+    </Container>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .team { padding-block: var(--space-8) var(--space-9); }
+  .team :global(.team__grid) { display: grid; grid-template-columns: 6fr 5fr; gap: var(--space-8); align-items: start; }
+  img { width: 100%; height: auto; border-radius: var(--radius-sm); }
+  figcaption { margin-top: var(--space-3); font-size: var(--size--1); color: var(--color-text-muted); }
+  h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }
+  .text p { max-width: 52ch; }
+  .text p + p { margin-top: var(--space-4); }
+  .contact { padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+  @media (max-width: 52rem) { .team :global(.team__grid) { grid-template-columns: 1fr; gap: var(--space-6); } }
+</style>

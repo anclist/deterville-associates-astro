@@ -2,24 +2,22 @@
 /**
  * Organism: HomeHero — the firm's name and promise beside a visual, in the sister firm's hero layout.
  * `visual="approach"` lists how the firm works; `visual="flag"` puts the Saint Lucia flag in the
- * portrait slot, `visual="pitons"` an illustration of the Pitons, and `visual="photo"` a gavel in
+ * portrait slot, and `visual="photo"` a gavel in
  * front of the flag (a wide image cropped to the slot around the gavel). Pair image visuals with
  * ApproachRow so the approach still appears on the page.
  */
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
 import Flag from '@atoms/Flag.astro';
-import Pitons from '@atoms/Pitons.astro';
 import { firm, approach } from '@data/site';
 
-interface Props { visual?: 'approach' | 'flag' | 'pitons' | 'photo' }
+interface Props { visual?: 'approach' | 'flag' | 'photo' }
 const { visual = 'approach' } = Astro.props;
 const image = (v: string) => v !== 'approach';
 ---
 <section class:list={['hero', image(visual) ? 'hero--image' : 'hero--approach']} aria-labelledby="hero-title">
   <Container class="hero__grid">
     {visual === 'flag' && <Flag crop="portrait" class="hero__image" />}
-    {visual === 'pitons' && <Pitons class="hero__image" />}
     {visual === 'photo' && (
       <img class="hero__image hero__photo" src="/images/hero-gavel-flag.jpg" alt="A judge's gavel in front of the flag of Saint Lucia" width="1536" height="864" fetchpriority="high" />
     )}

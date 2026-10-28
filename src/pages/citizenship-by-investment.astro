@@ -1,0 +1,64 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import PageHero from '@organisms/PageHero.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { cbi } from '@data/site';
+---
+<BaseLayout title="Saint Lucia Citizenship by Investment" description="Global Migration & Investment Services, Authorised Agent of the Saint Lucia Citizenship by Investment Programme, supports candidates through the application.">
+  <PageHero title="Saint Lucia Citizenship by Investment" lede={cbi.body}>
+    <Button href={`mailto:${cbi.email}`} size="lg">Email {cbi.agentShort}</Button>
+    <a href={`mailto:${cbi.email}`}>{cbi.email}</a>
+  </PageHero>
+
+  <section class="agent">
+    <Container class="agent__grid">
+      <figure>
+        <img src="/images/gmis-logo.png" alt={cbi.agent} width="600" height="206" />
+        <figcaption>Authorised Agent of the Saint Lucia Citizenship by Investment Programme</figcaption>
+      </figure>
+      <div>
+        <SectionHeading id="agent-title" title={cbi.agent} />
+        <p>
+          We at Global Migration &amp; Investment Services (GMIS) are proud to offer our clients our services as Authorised
+          Agents of the Saint Lucia Citizenship by Investment Programme. We support prospective candidates for citizenship,
+          assist in the process and submit their applications. We pride ourselves on our wealth of knowledge in international
+          migration.
+        </p>
+        <p>We look forward to serving you.</p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="other">
+    <Container class="other__grid">
+      <SectionHeading id="other-title" title="Other routes to citizenship" />
+      <p>
+        Deterville &amp; Associates also handles citizenship by descent, by marriage and through residence, as well as
+        immigration matters. <a href="/practice-areas#citizenship-and-immigration">See citizenship and immigration</a>.
+      </p>
+    </Container>
+  </section>
+
+  <CtaBand title="Questions about citizenship in Saint Lucia?" body="Book a consultation with one of our lawyers, or call the office." />
+</BaseLayout>
+
+<style>
+  .agent { padding-block: var(--space-9); background: var(--color-surface-tint); }
+  .agent :global(.agent__grid) { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: center; }
+  figure { display: grid; gap: var(--space-3); }
+  img { width: 100%; max-width: 22rem; height: auto; mix-blend-mode: multiply; }
+  figcaption { font-size: var(--size--1); color: var(--color-text-muted); max-width: 30ch; }
+  .agent p { max-width: 56ch; }
+  .agent p + p { margin-top: var(--space-4); }
+
+  .other { padding-block: var(--space-9); }
+  .other :global(.other__grid) { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); }
+  .other p { max-width: 56ch; font-size: var(--size-1); line-height: var(--leading-snug); }
+
+  @media (max-width: 52rem) {
+    .agent :global(.agent__grid), .other :global(.other__grid) { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+</style>

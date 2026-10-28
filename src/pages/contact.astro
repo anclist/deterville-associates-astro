@@ -1,0 +1,44 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import ContactMethod from '@molecules/ContactMethod.astro';
+import PageHero from '@organisms/PageHero.astro';
+import ContactForm from '@organisms/ContactForm.astro';
+import { firm } from '@data/site';
+---
+<BaseLayout title="Contact D&A" description="Contact Deterville & Associates in Castries, Saint Lucia: phone, email, office address and opening hours.">
+  <PageHero title="Contact D&A" lede="We at Deterville & Associates look forward to serving you. Send us a message to book a consultation, or call the office." />
+
+  <section class="contact">
+    <Container class="contact-grid">
+      <div>
+        <h2>Send a message</h2>
+        <ContactForm />
+      </div>
+      <aside class="aside" aria-label="Office details">
+        <div class="panel">
+          <ContactMethod label="Phone" href={firm.phoneHref}>{firm.phone}</ContactMethod>
+          <ContactMethod label="Phone" href={firm.phoneAltHref}>{firm.phoneAlt}</ContactMethod>
+          <ContactMethod label="Email" href={`mailto:${firm.email}`}>{firm.email}</ContactMethod>
+        </div>
+        <div class="details">
+          <ContactMethod label="Office" href={firm.mapHref}>{firm.address.line1}<br />{firm.address.city}</ContactMethod>
+          <ContactMethod label="Hours">Open {firm.hours}<br />{firm.hoursNote}</ContactMethod>
+          <ContactMethod label="Mailing address">{firm.mailing}</ContactMethod>
+          <p><a href={firm.mapHref} target="_blank" rel="noopener">Get directions</a></p>
+        </div>
+      </aside>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact { padding-block: var(--space-8) var(--space-9); }
+  .contact :global(.contact-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 62rem) { .contact :global(.contact-grid) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-9); align-items: start; } }
+  h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }
+  .aside { display: grid; gap: var(--space-7); }
+  .panel { display: grid; gap: var(--space-4); padding: var(--space-6); background: var(--color-surface-tint); border-radius: var(--radius-sm); }
+  .details { display: grid; gap: var(--space-5); }
+  .details a { text-underline-offset: 0.2em; }
+</style>

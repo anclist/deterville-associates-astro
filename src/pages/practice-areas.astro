@@ -1,0 +1,59 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import PageHero from '@organisms/PageHero.astro';
+import CitizenshipBand from '@organisms/CitizenshipBand.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { firm, practiceGroups } from '@data/site';
+
+const slug = (s: string) => s.toLowerCase().replace(/&/g, 'and').replace(/[^a-z]+/g, '-');
+---
+<BaseLayout title="Practice Areas" description="Family law, adoption, probate, conveyancing, land disputes, corporate law, litigation, citizenship, immigration and notarial services in Saint Lucia.">
+  <PageHero title="Practice areas" lede="The areas of Saint Lucia law we work in, grouped by the part of life they touch.">
+    <Button href={firm.bookHref} size="lg">Book a consultation</Button>
+    <a href={firm.phoneHref}>or call {firm.phone}</a>
+  </PageHero>
+
+  <nav class="toc" aria-label="Practice groups">
+    <Container>
+      <ul>{practiceGroups.map((g) => <li><a href={`#${slug(g.title)}`}>{g.title}</a></li>)}</ul>
+    </Container>
+  </nav>
+
+  {practiceGroups.map((g) => (
+    <section class="group" aria-labelledby={slug(g.title)}>
+      <Container class="group__grid">
+        <h2 id={slug(g.title)}>{g.title}</h2>
+        <ul class="areas">
+          {g.areas.map((a) => (
+            <li>
+              <span class="area">{a.title}</span>
+              {a.items && <span class="items">{a.items.join(' · ')}</span>}
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  ))}
+
+  <CitizenshipBand />
+  <CtaBand title="Not sure which area your matter falls under?" body="Tell us what’s happening and we’ll explain your options in plain language." />
+</BaseLayout>
+
+<style>
+  .toc { padding-block: var(--space-5); border-bottom: 1px solid var(--color-border); }
+  .toc ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
+  .toc a { color: var(--color-text-muted); text-decoration: none; }
+  .toc a:hover { color: var(--color-action); text-decoration: underline; }
+
+  .group { padding-block: var(--space-8); }
+  .group + .group { border-top: 1px solid var(--color-border); }
+  .group :global(.group__grid) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-8); align-items: start; }
+  h2 { font-size: var(--size-3); padding-top: var(--space-4); border-top: 2px solid var(--color-accent); }
+  .areas { list-style: none; padding: 0; border-top: 1px solid var(--color-border); }
+  .areas li { display: grid; gap: var(--space-1); padding-block: var(--space-4); border-bottom: 1px solid var(--color-border); }
+  .area { font-size: var(--size-1); line-height: var(--leading-snug); }
+  .items { font-size: var(--size--1); color: var(--color-text-muted); }
+  @media (max-width: 52rem) { .group :global(.group__grid) { grid-template-columns: 1fr; gap: var(--space-5); } }
+</style>

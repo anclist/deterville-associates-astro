@@ -2,9 +2,11 @@
 /** Organism: TipRow — the latest "Tip of the Week" posts in a row of three. Sibling of QuoteRow. */
 import Container from '@atoms/Container.astro';
 import SectionHeading from '@molecules/SectionHeading.astro';
-import { tips } from '@data/site';
+import { getCollection } from 'astro:content';
 
-const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const tips = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
 <section class="tips" aria-labelledby="tips-title">
   <Container>
@@ -12,9 +14,9 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { year: 'nume
     <div class="grid">
       {tips.map((t) => (
         <article>
-          <time datetime={t.date}>{fmt(t.date)}</time>
-          <h3><a href={`/blog/${t.slug}`}>{t.title}</a></h3>
-          <p>{t.excerpt}</p>
+          <time datetime={t.data.date.toISOString()}>{fmt(t.data.date)}</time>
+          <h3><a href={`/blog/${t.id}`}>{t.data.title}</a></h3>
+          <p>{t.data.description}</p>
         </article>
       ))}
     </div>
