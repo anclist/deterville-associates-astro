@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HomeHero from '@organisms/HomeHero.astro';
+import ApproachRow from '@organisms/ApproachRow.astro';
 import PracticeGroups from '@organisms/PracticeGroups.astro';
 import CitizenshipBand from '@organisms/CitizenshipBand.astro';
 import TipRow from '@organisms/TipRow.astro';
@@ -9,7 +10,8 @@ import CtaBand from '@organisms/CtaBand.astro';
 import { firm } from '@data/site';
 ---
 <BaseLayout title={firm.name}>
-  <HomeHero />
+  <HomeHero visual="photo" />
+  <ApproachRow />
   <PracticeGroups />
   <CitizenshipBand />
   <TipRow />
