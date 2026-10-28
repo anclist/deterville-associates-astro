@@ -50,6 +50,7 @@ const firmLinks = nav.filter((n) => n.href !== '/practice-areas');
       <p>Mailing address: {firm.mailing}</p>
       <p>Information on this site is general and is not legal advice. Contacting us does not create a lawyer–client relationship.</p>
       <p>© {year} {firm.name} · <a href="/styleguide">Styleguide</a></p>
+      <p class="credit">Developed by <a href="https://anclist.com" target="_blank" rel="noopener">anclist web dev</a></p>
     </div>
   </Container>
 </footer>
@@ -80,4 +81,5 @@ const firmLinks = nav.filter((n) => n.href !== '/practice-areas');
   @media (max-width: 62rem) { .grid { grid-template-columns: 1fr 1fr; } }
   /* Phones: link lists sit two across; the firm summary and contact details take the full width */
   @media (max-width: 36rem) { .grid { gap: var(--space-6) var(--space-5); } .grid > :first-child, .grid > :last-child { grid-column: 1 / -1; } }
+  .credit a { text-decoration: underline; text-underline-offset: 0.2em; }
 </style>
