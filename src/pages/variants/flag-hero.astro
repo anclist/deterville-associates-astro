@@ -1,0 +1,24 @@
+---
+/** Homepage variant: the Saint Lucia flag in the hero's portrait slot. Compare with "/". */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HomeHero from '@organisms/HomeHero.astro';
+import ApproachRow from '@organisms/ApproachRow.astro';
+import PracticeGroups from '@organisms/PracticeGroups.astro';
+import CitizenshipBand from '@organisms/CitizenshipBand.astro';
+import TipRow from '@organisms/TipRow.astro';
+import VisitUs from '@organisms/VisitUs.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { firm } from '@data/site';
+---
+<BaseLayout title={firm.name}>
+  <HomeHero visual="flag" />
+  <ApproachRow />
+  <PracticeGroups />
+  <CitizenshipBand />
+  <TipRow />
+  <VisitUs />
+  <CtaBand
+    title="Get on the path to your Saint Lucia law results today."
+    body="Book a consultation with one of our lawyers, or call the office."
+  />
+</BaseLayout>

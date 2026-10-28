@@ -1,0 +1,30 @@
+---
+/**
+ * Atom: Flag — the national flag of Saint Lucia, drawn from its geometry (2:1, cerulean field,
+ * white-edged black triangle, gold triangle in front: the Pitons rising from the sea).
+ * `crop="portrait"` frames the whole triangle at 3:4 on an extended field, for a hero image slot.
+ */
+interface Props { crop?: 'full' | 'portrait'; class?: string }
+const { crop = 'full', class: className } = Astro.props;
+const viewBox = crop === 'portrait' ? '2.6 -1.53 6.8 9.07' : '0 0 12 6';
+// The portrait frame is taller than the flag, so the field extends past it.
+const field = crop === 'portrait' ? { x: -4, y: -4, w: 20, h: 14 } : { x: 0, y: 0, w: 12, h: 6 };
+---
+<svg
+  class:list={['flag', `flag--${crop}`, className]}
+  viewBox={viewBox}
+  preserveAspectRatio="xMidYMid slice"
+  role="img"
+  aria-label="Flag of Saint Lucia"
+>
+  <rect x={field.x} y={field.y} width={field.w} height={field.h} fill="var(--flag-sky)" />
+  <path d="M6 0.5 8.5 5.5H3.5Z" fill="var(--paper)" />
+  <path d="M6 1.1 8.175 5.45H3.825Z" fill="var(--flag-black)" />
+  <path d="M6 3 8.5 5.5H3.5Z" fill="var(--flag-gold)" />
+</svg>
+
+<style>
+  .flag { display: block; width: 100%; height: auto; }
+  .flag--full { aspect-ratio: 2 / 1; }
+  .flag--portrait { aspect-ratio: 3 / 4; }
+</style>

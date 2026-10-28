@@ -1,15 +1,21 @@
 ---
 /**
- * Organism: HomeHero — the firm's name and promise beside how it works with clients.
- * Same layout as the sister firm's lawyer-led hero; here the firm is a team, so its approach
- * takes the place of a portrait.
+ * Organism: HomeHero — the firm's name and promise beside a visual, in the sister firm's hero layout.
+ * `visual="approach"` lists how the firm works; `visual="flag"` puts the Saint Lucia flag in the
+ * portrait slot (pair it with ApproachRow so the approach still appears on the page).
  */
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
+import Flag from '@atoms/Flag.astro';
 import { firm, approach } from '@data/site';
+
+interface Props { visual?: 'approach' | 'flag' }
+const { visual = 'approach' } = Astro.props;
 ---
-<section class="hero" aria-labelledby="hero-title">
+<section class:list={['hero', `hero--${visual}`]} aria-labelledby="hero-title">
   <Container class="hero__grid">
+    {visual === 'flag' && <Flag crop="portrait" class="hero__flag" />}
+
     <div class="text">
       <h1 id="hero-title">Deterville &amp; Associates</h1>
       <p class="role">{firm.tagline}</p>
@@ -24,17 +30,22 @@ import { firm, approach } from '@data/site';
       <p class="trust">{firm.address.line1}, {firm.address.city} · Open {firm.hours} · {firm.hoursNote}</p>
     </div>
 
-    <ul class="approach" aria-label="How we work">
-      {approach.map((a) => (
-        <li><strong>{a.title}</strong><span>{a.body}</span></li>
-      ))}
-    </ul>
+    {visual === 'approach' && (
+      <ul class="approach" aria-label="How we work">
+        {approach.map((a) => (
+          <li><strong>{a.title}</strong><span>{a.body}</span></li>
+        ))}
+      </ul>
+    )}
   </Container>
 </section>
 
 <style>
   .hero { padding-block: var(--space-8); }
-  .hero :global(.hero__grid) { display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); align-items: center; }
+  .hero :global(.hero__grid) { display: grid; gap: var(--space-8); align-items: center; }
+  .hero--approach :global(.hero__grid) { grid-template-columns: 7fr 5fr; }
+  .hero--flag :global(.hero__grid) { grid-template-columns: 5fr 7fr; }
+  .hero :global(.hero__flag) { border-radius: var(--radius-sm); }
   h1 { font-size: var(--size-4); line-height: 1.05; }
   .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
   .text > p:not(.role) { margin-top: var(--space-5); max-width: 52ch; }
@@ -54,6 +65,7 @@ import { firm, approach } from '@data/site';
 
   @media (max-width: 52rem) {
     .hero { padding-top: var(--space-5); }
-    .hero :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
+    .hero--approach :global(.hero__grid), .hero--flag :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
+    .hero :global(.hero__flag) { max-width: 20rem; }
   }
 </style>

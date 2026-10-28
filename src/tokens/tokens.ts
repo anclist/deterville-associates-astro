@@ -26,6 +26,10 @@ export const primitive = {
     // Saint Lucia flag blue, from the logo's scales and swords. Decorative only: rules, markers, focus.
     'flag-500': '#00AFEC',
     'flag-600': '#0090C4',
+    // The national flag's own colours, used only by the Flag atom
+    'flag-sky': '#66CCFF',
+    'flag-gold': '#FCD116',
+    'flag-black': '#000000',
     // Neutrals, cooled a touch toward the navy
     'ink-900': '#1A1A24',
     'ink-700': '#3A3A48',
