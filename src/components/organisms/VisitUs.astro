@@ -1,0 +1,34 @@
+---
+/** Organism: VisitUs — where the office is and how to reach it. Sibling of BookingFaq's two-column split. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import ContactMethod from '@molecules/ContactMethod.astro';
+import { firm } from '@data/site';
+---
+<section class="visit" aria-label="Visit or contact the office">
+  <Container class="visit__grid">
+    <div>
+      <SectionHeading id="visit-title" title="Visit the office" />
+      <div class="stack">
+        <ContactMethod label="Office" href={firm.mapHref}>{firm.address.line1}<br />{firm.address.city}</ContactMethod>
+        <ContactMethod label="Hours">Open {firm.hours}<br />{firm.hoursNote}</ContactMethod>
+        <ContactMethod label="Mailing address">{firm.mailing}</ContactMethod>
+      </div>
+    </div>
+    <div>
+      <SectionHeading id="contact-title" title="Get in touch" />
+      <div class="stack">
+        <ContactMethod label="Phone" href={firm.phoneHref}>{firm.phone}</ContactMethod>
+        <ContactMethod label="Phone" href={firm.phoneAltHref}>{firm.phoneAlt}</ContactMethod>
+        <ContactMethod label="Email" href={`mailto:${firm.email}`}>{firm.email}</ContactMethod>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .visit { padding-block: var(--space-9); border-top: 1px solid var(--color-border); }
+  .visit :global(.visit__grid) { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+  .stack { display: grid; gap: var(--space-5); }
+  @media (max-width: 48rem) { .visit :global(.visit__grid) { grid-template-columns: 1fr; gap: var(--space-7); } }
+</style>

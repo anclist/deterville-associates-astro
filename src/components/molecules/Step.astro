@@ -1,0 +1,16 @@
+---
+/** Molecule: Step — one stage in a real sequence. Render inside an <ol> so the number is the list marker. */
+interface Props { title: string }
+const { title } = Astro.props;
+---
+<li class="step">
+  <strong>{title}</strong>
+  <span><slot /></span>
+</li>
+
+<style>
+  .step { padding-left: var(--space-1); }
+  .step::marker { color: var(--color-action); font-weight: 600; }
+  strong { display: block; font-weight: 600; margin-bottom: var(--space-1); }
+  span { color: var(--color-text-muted); }
+</style>

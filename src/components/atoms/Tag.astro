@@ -1,0 +1,21 @@
+---
+/** Atom: Tag — short categorical label such as a blog category. Sentence case, one tone. */
+interface Props { href?: string }
+const { href } = Astro.props;
+const El = href ? 'a' : 'span';
+---
+<El class="tag" href={href}><slot /></El>
+
+<style>
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 0.15em 0.6em;
+    border-radius: var(--radius-sm);
+    font-size: var(--size--1);
+    font-weight: 500;
+    text-decoration: none;
+    background: var(--color-surface-tint);
+    color: var(--color-action);
+  }
+  a.tag:hover { text-decoration: underline; }
+</style>

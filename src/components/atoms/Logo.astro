@@ -1,0 +1,10 @@
+---
+/** Atom: Logo — the firm's twin Lady Justice mark with wordmark. Light grounds only. */
+interface Props { height?: number }
+const { height = 56 } = Astro.props;
+---
+<img class="logo" src="/images/logo.png" alt="Deterville &amp; Associates" height={height} width={Math.round(height * 1.17)} style={`height:${height}px`} />
+
+<style>
+  .logo { width: auto; max-width: none; }
+</style>

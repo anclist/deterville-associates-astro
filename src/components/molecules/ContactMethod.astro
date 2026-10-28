@@ -1,0 +1,16 @@
+---
+/** Molecule: ContactMethod — a muted label over its value; the value is the link. */
+interface Props { label: string; href?: string }
+const { label, href } = Astro.props;
+---
+<div class="contact-method">
+  <p class="label">{label}</p>
+  {href ? <a href={href}><slot /></a> : <p class="value"><slot /></p>}
+</div>
+
+<style>
+  .label { font-size: var(--size--1); color: var(--color-text-muted); }
+  a, .value { color: var(--color-text); }
+  a { text-underline-offset: 0.2em; }
+  a:hover { color: var(--color-action); }
+</style>

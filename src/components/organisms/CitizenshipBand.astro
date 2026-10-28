@@ -1,0 +1,37 @@
+---
+/**
+ * Organism: CitizenshipBand — Citizenship by Investment through the firm's affiliate, GMIS.
+ * Sits on the tint, in the slot the sister site gives its route-to-Canada timeline.
+ */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import { cbi } from '@data/site';
+---
+<section class="cbi" aria-labelledby="cbi-title">
+  <Container class="cbi__grid">
+    <div>
+      <SectionHeading id="cbi-title" title="Saint Lucia Citizenship by Investment" />
+      <p>{cbi.body}</p>
+      <p class="links">
+        <a href="/citizenship-by-investment">How the programme works</a>
+        <a href={`mailto:${cbi.email}`}>Email {cbi.agentShort}</a>
+      </p>
+    </div>
+    <figure class="agent">
+      <img src="/images/gmis-logo.png" alt={cbi.agent} width="600" height="206" loading="lazy" />
+      <figcaption>Authorised Agent of the Saint Lucia Citizenship by Investment Programme</figcaption>
+    </figure>
+  </Container>
+</section>
+
+<style>
+  .cbi { background: var(--color-surface-tint); padding-block: var(--space-9); }
+  .cbi :global(.cbi__grid) { display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); align-items: center; }
+  p { max-width: 56ch; }
+  .links { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-5); }
+  a { text-underline-offset: 0.2em; }
+  .agent { display: grid; gap: var(--space-3); justify-items: start; }
+  .agent img { width: 100%; max-width: 20rem; height: auto; mix-blend-mode: multiply; }
+  figcaption { font-size: var(--size--1); color: var(--color-text-muted); max-width: 30ch; }
+  @media (max-width: 52rem) { .cbi :global(.cbi__grid) { grid-template-columns: 1fr; gap: var(--space-6); } }
+</style>

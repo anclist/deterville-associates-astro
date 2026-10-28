@@ -1,0 +1,59 @@
+---
+/**
+ * Organism: HomeHero — the firm's name and promise beside how it works with clients.
+ * Same layout as the sister firm's lawyer-led hero; here the firm is a team, so its approach
+ * takes the place of a portrait.
+ */
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import { firm, approach } from '@data/site';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <Container class="hero__grid">
+    <div class="text">
+      <h1 id="hero-title">Deterville &amp; Associates</h1>
+      <p class="role">{firm.tagline}</p>
+      <p>
+        A law firm in Castries, Saint Lucia. We work with families, property owners and businesses, and help people
+        with citizenship and immigration, explaining your options in language you can understand.
+      </p>
+      <div class="actions">
+        <Button href={firm.bookHref} size="lg">Book a consultation</Button>
+        <a class="alt" href={firm.phoneHref}>or call {firm.phone}</a>
+      </div>
+      <p class="trust">{firm.address.line1}, {firm.address.city} · Open {firm.hours} · {firm.hoursNote}</p>
+    </div>
+
+    <ul class="approach" aria-label="How we work">
+      {approach.map((a) => (
+        <li><strong>{a.title}</strong><span>{a.body}</span></li>
+      ))}
+    </ul>
+  </Container>
+</section>
+
+<style>
+  .hero { padding-block: var(--space-8); }
+  .hero :global(.hero__grid) { display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); align-items: center; }
+  h1 { font-size: var(--size-4); line-height: 1.05; }
+  .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
+  .text > p:not(.role) { margin-top: var(--space-5); max-width: 52ch; }
+  .text > .trust { font-size: var(--size--1); color: var(--color-text-muted); }
+  .actions { display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-6); }
+  .alt { text-underline-offset: 0.2em; }
+
+  .approach {
+    list-style: none; margin: 0; padding: var(--space-6);
+    display: grid; gap: var(--space-5);
+    background: var(--color-surface-tint); border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-accent);
+  }
+  .approach li { display: grid; gap: var(--space-1); }
+  .approach strong { font: 500 var(--size-1)/1.25 var(--font-heading); color: var(--color-heading); }
+  .approach span { font-size: var(--size--1); color: var(--color-text-muted); }
+
+  @media (max-width: 52rem) {
+    .hero { padding-top: var(--space-5); }
+    .hero :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
+  }
+</style>

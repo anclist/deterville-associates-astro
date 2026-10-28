@@ -1,0 +1,42 @@
+---
+/** Organism: PracticeGroups — every practice area, grouped into four columns. Sibling of ServiceColumns. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import { practiceGroups } from '@data/site';
+---
+<section class="practice" aria-labelledby="practice-title">
+  <Container>
+    <SectionHeading id="practice-title" title="Practice areas" />
+    <div class="grid">
+      {practiceGroups.map((g) => (
+        <div class="group">
+          <h3>{g.title}</h3>
+          <ul>
+            {g.areas.map((a) => (
+              <li>
+                <span class="area">{a.title}</span>
+                {a.items && <span class="items">{a.items.join(', ')}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p><a href="/practice-areas">More on our practice areas</a></p>
+  </Container>
+</section>
+
+<style>
+  .practice { padding-block: var(--space-9); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-7); }
+  .group { border-top: 2px solid var(--color-accent); padding-top: var(--space-5); }
+  h3 { font-size: var(--size-2); margin-bottom: var(--space-4); }
+  ul { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
+  li { display: grid; gap: 2px; }
+  .area { font-weight: 500; }
+  .items { font-size: var(--size--1); color: var(--color-text-muted); }
+  p { margin-top: var(--space-7); }
+  a { text-underline-offset: 0.2em; }
+  @media (max-width: 62rem) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 36rem) { .grid { grid-template-columns: 1fr; } }
+</style>

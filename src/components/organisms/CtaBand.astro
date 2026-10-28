@@ -1,0 +1,33 @@
+---
+/** Organism: CtaBand — the closing ask on the tint, directly above the footer. Every page ends here. */
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import { firm } from '@data/site';
+interface Props { title?: string; body?: string }
+const {
+  title = 'Ready to talk about your situation?',
+  body = 'Book a consultation online, or call us. We meet clients wherever they are in the world.',
+} = Astro.props;
+---
+<section class="cta-band" aria-labelledby="cta-title">
+  <Container class="cta-band__inner">
+    <div>
+      <h2 id="cta-title">{title}</h2>
+      <p>{body}</p>
+    </div>
+    <div class="actions">
+      <Button href={firm.bookHref} size="lg">Book a consultation</Button>
+      <a href={firm.phoneHref}>or call {firm.phone}</a>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cta-band { background: var(--color-surface-tint); padding-block: var(--space-8); }
+  .cta-band :global(.cta-band__inner) { display: grid; gap: var(--space-5); align-items: center; }
+  @media (min-width: 60rem) { .cta-band :global(.cta-band__inner) { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); } }
+  h2 { font-size: var(--size-3); max-width: 26ch; }
+  p { margin-top: var(--space-2); color: var(--color-text-muted); max-width: 52ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
+  a:not(:global(.btn)) { text-underline-offset: 0.2em; }
+</style>
