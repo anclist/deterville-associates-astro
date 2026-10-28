@@ -1,0 +1,72 @@
+---
+/**
+ * Atom: Pitons — hand-drawn illustration of Gros Piton and Petit Piton rising from the sea,
+ * the landmark the flag's triangles stand for. Brand navy for the peaks, flag sky and gold for
+ * sea and sun. 3:4 portrait for the hero image slot.
+ */
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<svg class:list={['pitons', className]} viewBox="0 0 600 800" role="img" aria-label="Illustration of the Pitons rising from the sea, Saint Lucia">
+  <defs>
+    <linearGradient id="pitons-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--navy-50)" />
+      <stop offset="1" stop-color="#CFEFFC" />
+    </linearGradient>
+    <linearGradient id="pitons-sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--flag-sky)" />
+      <stop offset="1" stop-color="var(--flag-600)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky and sun -->
+  <rect width="600" height="540" fill="url(#pitons-sky)" />
+  <circle cx="478" cy="262" r="44" fill="var(--flag-gold)" />
+
+  <!-- Distant coastline -->
+  <path d="M0 500 C70 478 140 488 210 480 C300 470 380 486 460 478 C520 472 565 482 600 488 L600 540 L0 540 Z" fill="var(--navy-200)" />
+
+  <!-- Gros Piton: broad, rounded shoulders -->
+  <path d="M240 540 C285 450 330 330 372 268 C392 238 418 232 440 250 C470 276 500 352 540 430 C560 470 580 500 600 512 L600 540 Z" fill="var(--navy-600)" />
+  <path d="M440 250 C470 276 500 352 540 430 C560 470 580 500 600 512 L600 540 L520 540 C505 470 478 360 440 250 Z" fill="var(--navy-700)" />
+
+  <!-- Saddle between the peaks -->
+  <path d="M120 540 C200 506 270 500 340 518 C370 526 395 534 420 540 Z" fill="var(--navy-700)" />
+
+  <!-- Petit Piton: the steep spire in front -->
+  <path d="M40 540 C95 470 130 360 152 262 C160 226 168 204 180 200 C192 197 200 218 208 250 C232 352 262 456 318 540 Z" fill="var(--navy-800)" />
+  <path d="M180 200 C192 197 200 218 208 250 C232 352 262 456 318 540 L250 540 C232 450 204 330 180 200 Z" fill="var(--navy-900)" />
+
+  <!-- Sea -->
+  <rect y="538" width="600" height="262" fill="url(#pitons-sea)" />
+
+  <!-- Reflections of the peaks: broken shimmer under each -->
+  <g stroke="var(--navy-800)" stroke-linecap="round" stroke-width="5" opacity="0.22">
+    <line x1="70" y1="556" x2="290" y2="556" />
+    <line x1="110" y1="574" x2="250" y2="574" />
+    <line x1="150" y1="592" x2="214" y2="592" />
+    <line x1="290" y1="560" x2="590" y2="560" />
+    <line x1="340" y1="580" x2="540" y2="580" />
+    <line x1="400" y1="600" x2="480" y2="600" />
+  </g>
+
+  <!-- Sun on the water -->
+  <g stroke="var(--flag-gold)" stroke-linecap="round" opacity="0.85">
+    <line x1="452" y1="626" x2="504" y2="626" stroke-width="4" />
+    <line x1="462" y1="648" x2="494" y2="648" stroke-width="4" />
+    <line x1="471" y1="670" x2="485" y2="670" stroke-width="4" />
+  </g>
+
+  <!-- Swell -->
+  <g fill="none" stroke="var(--paper)" stroke-linecap="round" stroke-width="2.5" opacity="0.55">
+    <path d="M30 600 q20 -8 40 0 t40 0" />
+    <path d="M250 640 q20 -8 40 0 t40 0" />
+    <path d="M90 700 q20 -8 40 0 t40 0 t40 0" />
+    <path d="M400 720 q20 -8 40 0 t40 0" />
+    <path d="M210 760 q20 -8 40 0 t40 0" />
+  </g>
+</svg>
+
+<style>
+  .pitons { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; }
+</style>

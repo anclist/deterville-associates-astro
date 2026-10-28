@@ -2,19 +2,23 @@
 /**
  * Organism: HomeHero — the firm's name and promise beside a visual, in the sister firm's hero layout.
  * `visual="approach"` lists how the firm works; `visual="flag"` puts the Saint Lucia flag in the
- * portrait slot (pair it with ApproachRow so the approach still appears on the page).
+ * portrait slot, and `visual="pitons"` an illustration of the Pitons. Pair image visuals with
+ * ApproachRow so the approach still appears on the page.
  */
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
 import Flag from '@atoms/Flag.astro';
+import Pitons from '@atoms/Pitons.astro';
 import { firm, approach } from '@data/site';
 
-interface Props { visual?: 'approach' | 'flag' }
+interface Props { visual?: 'approach' | 'flag' | 'pitons' }
 const { visual = 'approach' } = Astro.props;
+const image = (v: string) => v !== 'approach';
 ---
-<section class:list={['hero', `hero--${visual}`]} aria-labelledby="hero-title">
+<section class:list={['hero', image(visual) ? 'hero--image' : 'hero--approach']} aria-labelledby="hero-title">
   <Container class="hero__grid">
-    {visual === 'flag' && <Flag crop="portrait" class="hero__flag" />}
+    {visual === 'flag' && <Flag crop="portrait" class="hero__image" />}
+    {visual === 'pitons' && <Pitons class="hero__image" />}
 
     <div class="text">
       <h1 id="hero-title">Deterville &amp; Associates</h1>
@@ -44,8 +48,8 @@ const { visual = 'approach' } = Astro.props;
   .hero { padding-block: var(--space-8); }
   .hero :global(.hero__grid) { display: grid; gap: var(--space-8); align-items: center; }
   .hero--approach :global(.hero__grid) { grid-template-columns: 7fr 5fr; }
-  .hero--flag :global(.hero__grid) { grid-template-columns: 5fr 7fr; }
-  .hero :global(.hero__flag) { border-radius: var(--radius-sm); }
+  .hero--image :global(.hero__grid) { grid-template-columns: 5fr 7fr; }
+  .hero :global(.hero__image) { border-radius: var(--radius-sm); }
   h1 { font-size: var(--size-4); line-height: 1.05; }
   .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
   .text > p:not(.role) { margin-top: var(--space-5); max-width: 52ch; }
@@ -65,7 +69,7 @@ const { visual = 'approach' } = Astro.props;
 
   @media (max-width: 52rem) {
     .hero { padding-top: var(--space-5); }
-    .hero--approach :global(.hero__grid), .hero--flag :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
-    .hero :global(.hero__flag) { max-width: 20rem; }
+    .hero--approach :global(.hero__grid), .hero--image :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
+    .hero :global(.hero__image) { max-width: 20rem; }
   }
 </style>
