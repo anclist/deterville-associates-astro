@@ -20,10 +20,10 @@ export const firm = {
   bookHref: '/contact',
 } as const;
 
-/** The sister firm in Toronto. */
+/** The sister firm in Toronto. Points at its proposal preview; switch to https://detervillelaw.com at launch. */
 export const sister = {
   name: 'Deterville Law Office',
-  href: 'https://detervillelaw.com',
+  href: 'https://anclist.github.io/deterville-law-astro/',
   summary: 'Canadian immigration and Ontario wills & estates',
 } as const;
 

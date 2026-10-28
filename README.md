@@ -34,3 +34,5 @@ npm run dev     # http://localhost:4321
 - Hero image: confirm the firm is happy with it, or supply their own photograph.
 - Practice-area grouping (Family & estates, Property & land, Business & litigation, Citizenship & immigration) is ours.
 - Office hours: the live site gives 8:00 a.m. to 4:00 p.m. but not which days.
+
+- Sister-firm links point at the other proposal preview; switch `sister.href` in `src/data/site.ts` to the live domain at launch.
