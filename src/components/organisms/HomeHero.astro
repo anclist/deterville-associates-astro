@@ -2,7 +2,8 @@
 /**
  * Organism: HomeHero — the firm's name and promise beside a visual, in the sister firm's hero layout.
  * `visual="approach"` lists how the firm works; `visual="flag"` puts the Saint Lucia flag in the
- * portrait slot, and `visual="pitons"` an illustration of the Pitons. Pair image visuals with
+ * portrait slot, `visual="pitons"` an illustration of the Pitons, and `visual="photo"` a gavel on
+ * the flag (generated with Figma AI). Pair image visuals with
  * ApproachRow so the approach still appears on the page.
  */
 import Container from '@atoms/Container.astro';
@@ -11,7 +12,7 @@ import Flag from '@atoms/Flag.astro';
 import Pitons from '@atoms/Pitons.astro';
 import { firm, approach } from '@data/site';
 
-interface Props { visual?: 'approach' | 'flag' | 'pitons' }
+interface Props { visual?: 'approach' | 'flag' | 'pitons' | 'photo' }
 const { visual = 'approach' } = Astro.props;
 const image = (v: string) => v !== 'approach';
 ---
@@ -19,6 +20,9 @@ const image = (v: string) => v !== 'approach';
   <Container class="hero__grid">
     {visual === 'flag' && <Flag crop="portrait" class="hero__image" />}
     {visual === 'pitons' && <Pitons class="hero__image" />}
+    {visual === 'photo' && (
+      <img class="hero__image hero__photo" src="/images/hero-gavel.jpg" alt="A judge's gavel resting on the flag of Saint Lucia" width="896" height="1200" fetchpriority="high" />
+    )}
 
     <div class="text">
       <h1 id="hero-title">Deterville &amp; Associates</h1>
@@ -50,6 +54,7 @@ const image = (v: string) => v !== 'approach';
   .hero--approach :global(.hero__grid) { grid-template-columns: 7fr 5fr; }
   .hero--image :global(.hero__grid) { grid-template-columns: 5fr 7fr; }
   .hero :global(.hero__image) { border-radius: var(--radius-sm); }
+  .hero__photo { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; }
   h1 { font-size: var(--size-4); line-height: 1.05; }
   .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
   .text > p:not(.role) { margin-top: var(--space-5); max-width: 52ch; }
