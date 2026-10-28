@@ -73,6 +73,10 @@ const image = (v: string) => v !== 'approach';
   @media (max-width: 52rem) {
     .hero { padding-top: var(--space-5); }
     .hero--approach :global(.hero__grid), .hero--image :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-7); }
-    .hero :global(.hero__image) { max-width: 20rem; }
+    .hero :global(.flag) { max-width: 20rem; }
+    /* The photo is landscape at source: use a wide crop on phones so the title reaches the first screen */
+    .hero__photo { aspect-ratio: 16 / 10; object-position: center; }
   }
+  /* Phones: the primary action spans the width, easy to reach with a thumb */
+  @media (max-width: 30rem) { .actions :global(.btn) { width: 100%; } }
 </style>

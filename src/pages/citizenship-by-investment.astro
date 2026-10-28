@@ -46,7 +46,7 @@ import { cbi } from '@data/site';
 </BaseLayout>
 
 <style>
-  .agent { padding-block: var(--space-9); background: var(--color-surface-tint); }
+  .agent { padding-block: var(--layout-section); background: var(--color-surface-tint); }
   .agent :global(.agent__grid) { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: center; }
   figure { display: grid; gap: var(--space-3); }
   img { width: 100%; max-width: 22rem; height: auto; mix-blend-mode: multiply; }
@@ -54,7 +54,7 @@ import { cbi } from '@data/site';
   .agent p { max-width: 56ch; }
   .agent p + p { margin-top: var(--space-4); }
 
-  .other { padding-block: var(--space-9); }
+  .other { padding-block: var(--layout-section); }
   .other :global(.other__grid) { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); }
   .other p { max-width: 56ch; font-size: var(--size-1); line-height: var(--leading-snug); }
 
