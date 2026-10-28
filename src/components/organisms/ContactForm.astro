@@ -19,7 +19,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
     <FormField id="email" label="Email" type="email" required autocomplete="email" />
   </div>
   <div class="row">
-    <FormField id="phone" label="Phone or WhatsApp" type="tel" autocomplete="tel" hint="Optional. Include your country code." />
+    <FormField id="phone" label="Phone" type="tel" autocomplete="tel" hint="Optional. Include your country code." />
     <FormField id="service" label="What do you need help with?" as="select" options={topics} required />
   </div>
   <FormField id="message" label="How can we help?" as="textarea" required hint="A short summary is enough. Please don’t include confidential details yet." />
